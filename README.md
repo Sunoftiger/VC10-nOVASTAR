@@ -1,0 +1,707 @@
+[vc10.html](https://github.com/user-attachments/files/27654518/vc10.html)
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>VC10 · All-in-One Controller · Dinalight</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#ffffff;--bg2:#f7f8fa;--card:#fff;--border:#e5e7eb;--a:#0057b7;--a2:#003d82;--accent:#00a86b;--t:#1a1a2e;--s:#5a5f72;--b:#d1d5db;--r:12px}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);font-size:14px;-webkit-tap-highlight-color:transparent;line-height:1.6}
+
+/* HERO */
+.hero{background:var(--bg);padding:28px 18px 20px;border-bottom:1px solid var(--border);text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--bg2);border:1px solid var(--border);padding:5px 14px;border-radius:20px;font-size:11px;color:var(--s);font-weight:700;letter-spacing:.5px;margin-bottom:14px}
+.hero h1{font-size:clamp(28px,7vw,42px);font-weight:800;color:var(--t);letter-spacing:-1px;line-height:1.1;margin-bottom:4px}
+.hero h1 span{color:var(--a)}
+.hero .sub{font-size:13px;color:var(--s);margin-bottom:16px;font-weight:500}
+.hero-stats{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.hs{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:8px 14px;text-align:center;min-width:72px}
+.hs .v{font-size:15px;font-weight:800;color:var(--a)}
+.hs .l{font-size:9px;color:var(--s);letter-spacing:.8px;font-weight:700;margin-top:1px}
+
+/* NAV */
+nav{display:flex;overflow-x:auto;gap:4px;padding:10px 12px;background:var(--bg);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+.nb{flex-shrink:0;padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--s);font-size:12px;cursor:pointer;transition:.2s;white-space:nowrap;font-weight:700;font-family:inherit}
+.nb.on{background:var(--a);border-color:var(--a);color:#fff}
+
+/* SECCIONES */
+.sec{display:none;padding:16px;max-width:680px;margin:0 auto}
+.sec.on{display:block}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.ch{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ci{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.ct{font-size:14px;font-weight:800;color:var(--t)}
+.cs{font-size:11px;color:var(--s);font-weight:500}
+
+/* SPECS TABLE */
+.spec-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+.spec-table th{background:var(--bg2);color:var(--s);padding:8px 10px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.5px;font-weight:800;border-bottom:1px solid var(--border)}
+.spec-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.spec-table td:first-child{color:var(--s);font-weight:600;width:38%}
+.spec-table td:last-child{color:var(--t);font-weight:700}
+.spec-table tr:last-child td{border:none}
+
+/* ROWS */
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px;gap:10px;align-items:flex-start}
+.row:last-child{border:none}
+.rl{color:var(--s);font-weight:600;flex-shrink:0}
+.rv{font-weight:700;color:var(--t);text-align:right}
+
+/* ACORDEÓN */
+.acc{border:1px solid var(--border);border-radius:var(--r);margin-bottom:8px;overflow:hidden}
+.ah{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;cursor:pointer;background:var(--bg);font-size:13px;font-weight:700;color:var(--t);transition:.2s;gap:8px}
+.ah:hover{background:var(--bg2)}
+.ah .arrow{transition:.3s;font-size:12px;color:var(--s)}
+.acc.open .ah .arrow{transform:rotate(180deg)}
+.ab{max-height:0;overflow:hidden;transition:.3s;padding:0 14px}
+.acc.open .ab{max-height:2000px;padding:0 14px 14px}
+
+/* INDICADORES */
+.ind{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}
+.ind:last-child{border:none}
+.ind-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.ind-name{font-weight:700;color:var(--t);min-width:70px}
+.ind-desc{color:var(--s)}
+
+/* CHIPS */
+.chip{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;margin:2px}
+.chip-b{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}
+.chip-g{background:#dcfce7;color:#166534;border:1px solid #bbf7d0}
+.chip-y{background:#fef9c3;color:#854d0e;border:1px solid #fef08a}
+.chip-r{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
+.chip-p{background:#f3e8ff;color:#6b21a8;border:1px solid #e9d5ff}
+
+/* TIP */
+.tip{display:flex;gap:10px;padding:12px;background:var(--bg2);border-radius:var(--r);margin:10px 0;border-left:3px solid var(--accent)}
+.tip .ti{font-size:16px;flex-shrink:0}
+.tip .tt{font-size:12px;color:var(--s);line-height:1.6}
+.tip .tt strong{color:var(--t)}
+
+/* WARNING */
+.warn{display:flex;gap:10px;padding:12px;background:#fef9c3;border-radius:var(--r);margin:10px 0;border-left:3px solid #eab308}
+.warn .ti{font-size:16px;flex-shrink:0}
+.warn .tt{font-size:12px;color:#854d0e;line-height:1.6}
+.warn .tt strong{color:#713f12}
+
+/* PANEL VISUAL */
+.panel-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin:10px 0}
+.panel-label{font-size:10px;font-weight:800;color:var(--a);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.conn{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px}
+.conn:last-child{border:none}
+.conn-icon{font-size:14px;flex-shrink:0;width:20px;text-align:center}
+.conn-name{font-weight:700;color:var(--t);min-width:90px}
+.conn-desc{color:var(--s);font-size:11px}
+
+/* CODEC TABLE */
+.codec-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px}
+.codec-table th{background:var(--a);color:#fff;padding:6px 8px;text-align:left;font-size:10px;font-weight:700}
+.codec-table td{padding:6px 8px;border-bottom:1px solid var(--border);font-size:11px}
+.codec-table tr:nth-child(even) td{background:var(--bg2)}
+
+/* BUSCADOR */
+.sbox{position:relative;margin-bottom:14px}
+.sbox input{width:100%;padding:12px 14px 12px 38px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);color:var(--t);font-size:13px;outline:none;font-family:inherit}
+.sbox input:focus{border-color:var(--a)}
+.sbox::before{content:"🔍";position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px}
+
+.mono{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--bg2);padding:2px 6px;border-radius:4px}
+
+.section-title{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--s);font-weight:800;margin:16px 0 8px 2px;display:flex;align-items:center;gap:6px}
+
+.empty{text-align:center;padding:40px 16px;color:var(--s)}
+.empty .em{font-size:36px;margin-bottom:8px}
+
+footer{text-align:center;padding:24px 16px;color:var(--s);font-size:11px;border-top:1px solid var(--border);margin-top:24px}
+footer strong{color:var(--a)}
+
+/* QUIZ */
+.quiz-opt{display:block;width:100%;padding:12px;margin-bottom:6px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);text-align:left;font-size:12px;cursor:pointer;font-family:inherit;font-weight:600;color:var(--t);transition:.2s}
+.quiz-opt:hover{border-color:var(--a);background:#eef4ff}
+.quiz-opt.correct{background:#dcfce7;border-color:#16a34a;color:#166534}
+.quiz-opt.wrong{background:#fee2e2;border-color:#dc2626;color:#991b1b}
+
+@keyframes blink2{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes blink1{0%,100%{opacity:1}50%{opacity:.2}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+<div class="hero-badge">DINALIGHT · NOVASTAR</div>
+<h1>VC <span>10</span></h1>
+<p class="sub">All-in-One Controller · Guía técnica interactiva</p>
+<div class="hero-stats">
+<div class="hs"><div class="v">6.5M</div><div class="l">PÍXELES</div></div>
+<div class="hs"><div class="v">10×</div><div class="l">ETH OUT</div></div>
+<div class="hs"><div class="v">4K×1K</div><div class="l">@60Hz</div></div>
+<div class="hs"><div class="v">3</div><div class="l">CAPAS</div></div>
+<div class="hs"><div class="v">1F</div><div class="l">LATENCIA</div></div>
+</div>
+</div>
+
+<nav id="nav">
+<button class="nb on" data-t="intro">📖 Intro</button>
+<button class="nb" data-t="conex">🔌 Conexiones</button>
+<button class="nb" data-t="panel">🎛️ Panel frontal</button>
+<button class="nb" data-t="capas">🎬 Capas & OSD</button>
+<button class="nb" data-t="leds">💡 Indicadores</button>
+<button class="nb" data-t="video">🎥 Video Source</button>
+<button class="nb" data-t="specs">📊 Specs</button>
+<button class="nb" data-t="trouble">🔧 Problemas</button>
+<button class="nb" data-t="buscar">🔍 Buscar</button>
+<button class="nb" data-t="quiz">🎯 Quiz</button>
+</nav>
+
+<!-- INTRO -->
+<div class="sec on" id="s-intro">
+<div class="card">
+<div class="ch"><div class="ci" style="background:#dbeafe">📦</div><div><div class="ct">¿Qué es el VC10?</div><div class="cs">All-in-One: procesador + sending en un equipo</div></div></div>
+<p style="font-size:12px;color:var(--s);line-height:1.7">El VC10 es el controlador all-in-one de NovaStar que integra <strong>procesamiento de video y envío a pantalla LED</strong> en una sola caja rackeable de 1U. Tiene <strong>10 puertos Gigabit Ethernet</strong> y maneja hasta <strong>6.5 millones de píxeles</strong> con ancho máximo de 10.240 px y alto máximo de 8.192 px — pensado para pantallas extra-anchas o extra-altas en aplicaciones de cartelería fija.</p>
+</div>
+
+<div class="card">
+<div class="ch"><div class="ci" style="background:#dcfce7">🎯</div><div><div class="ct">¿Para qué se usa?</div><div class="cs">Aplicaciones típicas</div></div></div>
+<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px">
+<span class="chip chip-b">Cartelería fija</span>
+<span class="chip chip-g">Frente de local</span>
+<span class="chip chip-p">Cadenas de retail</span>
+<span class="chip chip-y">Publicidad outdoor</span>
+<span class="chip chip-b">Estadios</span>
+<span class="chip chip-g">Auditorios</span>
+<span class="chip chip-p">Salas de control</span>
+<span class="chip chip-y">Señalización urbana</span>
+</div>
+</div>
+
+<div class="card">
+<div class="ch"><div class="ci" style="background:#f3e8ff">⚡</div><div><div class="ct">Características principales</div></div></div>
+<div class="row"><span class="rl">Carga máxima</span><span class="rv">6,500,000 píxeles</span></div>
+<div class="row"><span class="rl">Ancho máx</span><span class="rv">10,240 px</span></div>
+<div class="row"><span class="rl">Alto máx</span><span class="rv">8,192 px</span></div>
+<div class="row"><span class="rl">Procesamiento</span><span class="rv">4K×1K @60Hz</span></div>
+<div class="row"><span class="rl">Tecnología imagen</span><span class="rv">SuperView III</span></div>
+<div class="row"><span class="rl">Capas simultáneas</span><span class="rv">3 (Main + PIP1 + PIP2)</span></div>
+<div class="row"><span class="rl">OSD</span><span class="rv">1 imagen por preset · 8 guardables</span></div>
+<div class="row"><span class="rl">Presets</span><span class="rv">10 user-defined</span></div>
+<div class="row"><span class="rl">Latencia mínima</span><span class="rv">1 frame (low latency + sync)</span></div>
+<div class="row"><span class="rl">Alimentación</span><span class="rv">100–240V~ · 1.6A · 50/60Hz</span></div>
+<div class="row"><span class="rl">Consumo</span><span class="rv">28 W</span></div>
+<div class="row"><span class="rl">Dimensiones</span><span class="rv">482.6 × 250.0 × 50.1 mm</span></div>
+<div class="row"><span class="rl">Peso neto</span><span class="rv">3.5 kg</span></div>
+<div class="row"><span class="rl">Peso bruto</span><span class="rv">5.6 kg</span></div>
+<div class="row"><span class="rl">Ruido típico</span><span class="rv">45 dB(A) a 25°C</span></div>
+</div>
+
+<div class="tip"><span class="ti">📦</span><div class="tt"><strong>En la caja viene:</strong> 1× VC10 · 1× Cable de poder · 1× Cable USB · 1× Cable DVI · 1× Cable HDMI · 1× Certificate of Approval. Packing: 550 × 175 × 400 mm.</div></div>
+
+<div class="tip"><span class="ti">🆚</span><div class="tt"><strong>VC10 vs VX1000:</strong> Mismo motor (6.5M px, 10 ETH, SuperView III, 3 capas), pero el VC10 es para <strong>instalaciones fijas</strong> — sin fibra óptica, sin Genlock externo, sin 3D, una sola DVI. A cambio, suma <strong>OSD nativo</strong> y latencia mínima de 1 frame.</div></div>
+
+<div class="warn"><span class="ti">⚠️</span><div class="tt"><strong>3G-SDI es opcional:</strong> No todos los VC10 vienen con SDI de fábrica. Si tu instalación lo requiere, confirmá con el proveedor antes de la compra.</div></div>
+</div>
+
+<!-- CONEXIONES -->
+<div class="sec" id="s-conex">
+<div class="card">
+<div class="ch"><div class="ci" style="background:#dbeafe">🔌</div><div><div class="ct">Conectores y puertos</div><div class="cs">Panel trasero · entradas, salidas y control</div></div></div>
+</div>
+
+<div class="panel-box">
+<div class="panel-label">▶ Entradas de video (INPUT)</div>
+<div class="conn"><span class="conn-icon">📺</span><span class="conn-name">HDMI 1.4 (×2)</span><span class="conn-desc">Máx 4K×1K@60Hz · HDCP 1.4 · resoluciones custom hasta 4092×1136</span></div>
+<div class="conn"><span class="conn-icon">🖥️</span><span class="conn-name">DVI (×1)</span><span class="conn-desc">DVI (HDMI 1.4) · Máx 4K×1K@60Hz · HDCP 1.4 · custom hasta 4092×1136</span></div>
+<div class="conn"><span class="conn-icon">🎥</span><span class="conn-name">3G-SDI (×1)</span><span class="conn-desc">OPCIONAL · ST-424/ST-292/ST-259 · Máx 1920×1080@60Hz · IN+LOOP · deinterlacing</span></div>
+<div class="conn"><span class="conn-icon">🎧</span><span class="conn-name">AUDIO IN</span><span class="conn-desc">Jack 3.5 mm · entrada independiente o por HDMI</span></div>
+</div>
+
+<div class="panel-box">
+<div class="panel-label">▶ Salidas (OUTPUT)</div>
+<div class="conn"><span class="conn-icon">🌐</span><span class="conn-name">ETH 1–10</span><span class="conn-desc">10× Gigabit a receiving cards · 6.5M px total · 10240×8192 máx</span></div>
+<div class="conn"><span class="conn-icon">📺</span><span class="conn-name">HDMI 1.3</span><span class="conn-desc">Salida para monitoreo o video · resolución ajustable</span></div>
+<div class="conn"><span class="conn-icon">🔊</span><span class="conn-name">AUDIO OUT</span><span class="conn-desc">Jack 3.5 mm · salida estéreo independiente</span></div>
+</div>
+
+<div class="panel-box">
+<div class="panel-label">▶ Control y alimentación</div>
+<div class="conn"><span class="conn-icon">🖧</span><span class="conn-name">ETHERNET</span><span class="conn-desc">Conexión a PC de control · actualización de firmware vía V-Can</span></div>
+<div class="conn"><span class="conn-icon">🔌</span><span class="conn-name">USB Type-B</span><span class="conn-desc">USB 2.0 · conexión a PC de control</span></div>
+<div class="conn"><span class="conn-icon">🔗</span><span class="conn-name">USB Type-A</span><span class="conn-desc">USB 2.0 · salida para cascada de dispositivos</span></div>
+<div class="conn"><span class="conn-icon">⚡</span><span class="conn-name">AC IN</span><span class="conn-desc">100–240V~ · 50/60Hz · 1.6A · con switch ON/OFF en panel frontal</span></div>
+</div>
+
+<div class="tip"><span class="ti">🎵</span><div class="tt"><strong>Audio por tarjeta multifunción:</strong> Si usás una multifunction card NovaStar para sacar audio en la pantalla, conectala obligatoriamente a <strong>ETH 1 o ETH 2</strong> — son los únicos puertos que rutean audio.</div></div>
+
+<div class="warn"><span class="ti">⚠️</span><div class="tt"><strong>HDMI y DVI NO soportan señales entrelazadas (interlaced).</strong> Si tu fuente entrega 1080i, convertila a progresiva antes del VC10.</div></div>
+
+<div class="card">
+<div class="ch"><div class="ci" style="background:#dcfce7">🔁</div><div><div class="ct">Hot backup (redundancia)</div></div></div>
+<p style="font-size:12px;color:var(--s);line-height:1.7;margin-bottom:8px">El VC10 soporta dos esquemas de respaldo en caliente:</p>
+<div class="row"><span class="rl">Entre dispositivos</span><span class="rv">VC10 principal + VC10 backup</span></div>
+<div class="row"><span class="rl">Entre puertos ETH</span><span class="rv">ETH primario + ETH secundario</span></div>
+</div>
+</div>
+
+<!-- PANEL FRONTAL -->
+<div class="sec" id="s-panel">
+<div class="card">
+<div class="ch"><div class="ci" style="background:#fef9c3">🎛️</div><div><div class="ct">Botones del panel frontal</div><div class="cs">Control sin computadora</div></div></div>
+</div>
+
+<div class="panel-box">
+<div class="panel-label">▶ Control principal</div>
+<div class="conn"><span class="conn-icon">🔘</span><span class="conn-name">POWER</span><span class="conn-desc">Switch físico ON/OFF para encender o apagar el equipo</span></div>
+<div class="conn"><span class="conn-icon">🖥️</span><span class="conn-name">LCD</span><span class="conn-desc">Pantalla de estado, menús, submenús y mensajes del sistema</span></div>
+<div class="conn"><span class="conn-icon">🎛️</span><span class="conn-name">KNOB</span><span class="conn-desc">Girar = navegar/ajustar · Presionar = confirmar</span></div>
+<div class="conn"><span class="conn-icon">⬅️</span><span class="conn-name">ESC</span><span class="conn-desc">Salir del menú actual o cancelar la operación en curso</span></div>
+</div>
+
+<div class="panel-box">
+<div class="panel-label">▶ Control de capas (Layer Control Area)</div>
+<div class="conn"><span class="conn-icon">🎬</span><span class="conn-name">MAIN</span><span class="conn-desc">Abre o cierra la capa principal (Main Layer)</span></div>
+<div class="conn"><span class="conn-icon">🖼️</span><span class="conn-name">PIP 1</span><span class="conn-desc">Abre o cierra la primera capa Picture-in-Picture</span></div>
+<div class="conn"><span class="conn-icon">🖼️</span><span class="conn-name">PIP 2</span><span class="conn-desc">Abre o cierra la segunda capa Picture-in-Picture</span></div>
+<div class="conn"><span class="conn-icon">🔲</span><span class="conn-name">SCALE</span><span class="conn-desc">Full screen — la capa de menor prioridad ocupa toda la pantalla</span></div>
+</div>
+
+<div class="panel-box">
+<div class="panel-label">▶ Conmutador de fuentes (Input Source)</div>
+<div class="conn"><span class="conn-icon">📥</span><span class="conn-name">HDMI 1</span><span class="conn-desc">Asigna HDMI 1 como fuente de la capa Main</span></div>
+<div class="conn"><span class="conn-icon">📥</span><span class="conn-name">HDMI 2</span><span class="conn-desc">Asigna HDMI 2 como fuente de la capa Main</span></div>
+<div class="conn"><span class="conn-icon">📥</span><span class="conn-name">DVI</span><span class="conn-desc">Asigna DVI como fuente de la capa Main</span></div>
+<div class="conn"><span class="conn-icon">📥</span><span class="conn-name">SDI</span><span class="conn-desc">Asigna 3G-SDI como fuente de la capa Main (si está instalado)</span></div>
+</div>
+
+<div class="panel-box">
+<div class="panel-label">▶ Accesos rápidos</div>
+<div class="conn"><span class="conn-icon">⭐</span><span class="conn-name">PRESET</span><span class="conn-desc">Acceso directo al menú de presets (10 user-defined)</span></div>
+<div class="conn"><span class="conn-icon">⚙️</span><span class="conn-name">FN</span><span class="conn-desc">Botón customizable — asignás la función desde el menú</span></div>
+</div>
+
+<div class="tip"><span class="ti">🔒</span><div class="tt"><strong>Bloqueo de panel:</strong> Mantené presionados <strong>KNOB + ESC</strong> simultáneamente durante 3 segundos o más para bloquear o desbloquear todos los botones del panel frontal. Útil para evitar manipulaciones accidentales en instalaciones permanentes.</div></div>
+</div>
+
+<!-- CAPAS & OSD -->
+<div class="sec" id="s-capas">
+<div class="card">
+<div class="ch"><div class="ci" style="background:#f3e8ff">🎬</div><div><div class="ct">Sistema de capas</div><div class="cs">3 layers + OSD simultáneas</div></div></div>
+<p style="font-size:12px;color:var(--s);line-height:1.7">El VC10 maneja hasta <strong>3 capas de video</strong> al mismo tiempo, cada una con su propio tamaño, posición y prioridad ajustable. Sumás encima <strong>1 capa OSD</strong> para textos, logos o gráficos fijos.</p>
+</div>
+
+<div class="acc open">
+<div class="ah" onclick="toggleAcc(this)">🎬 Main Layer (capa principal) <span class="arrow">▼</span></div>
+<div class="ab">
+<p style="font-size:12px;color:var(--s);line-height:1.7;margin-bottom:8px">La capa base del compositor. Acepta cualquier fuente: HDMI 1, HDMI 2, DVI o SDI. Conmutás la fuente con los botones de Input Source del panel frontal.</p>
+<div class="row"><span class="rl">Tamaño</span><span class="rv">Ajustable</span></div>
+<div class="row"><span class="rl">Posición</span><span class="rv">Libre (free positioning)</span></div>
+<div class="row"><span class="rl">Prioridad</span><span class="rv">Ajustable vs PIP</span></div>
+<div class="row"><span class="rl">Cropping</span><span class="rv">Free input cropping</span></div>
+</div>
+</div>
+
+<div class="acc">
+<div class="ah" onclick="toggleAcc(this)">🖼️ PIP 1 y PIP 2 (picture-in-picture) <span class="arrow">▼</span></div>
+<div class="ab">
+<p style="font-size:12px;color:var(--s);line-height:1.7;margin-bottom:8px">Dos capas adicionales que se montan sobre la Main. Cada una con fuente, tamaño, posición y prioridad propios. Se abren o cierran con los botones PIP 1 y PIP 2 del panel.</p>
+<div class="tip"><span class="ti">💡</span><div class="tt"><strong>LEDs de estado:</strong> Azul fijo = capa abierta · Azul parpadeando = capa siendo editada · Blanco = capa cerrada.</div></div>
+</div>
+</div>
+
+<div class="acc">
+<div class="ah" onclick="toggleAcc(this)">📝 OSD (On-Screen Display) <span class="arrow">▼</span></div>
+<div class="ab">
+<p style="font-size:12px;color:var(--s);line-height:1.7;margin-bottom:8px">Capa de overlay para imágenes fijas: logos, marcas de agua, textos institucionales. Va por encima del compositor de capas de video.</p>
+<div class="row"><span class="rl">Imágenes por preset</span><span class="rv">1</span></div>
+<div class="row"><span class="rl">Imágenes guardables</span><span class="rv">Hasta 8</span></div>
+<div class="row"><span class="rl">Resolución máxima</span><span class="rv">6.5M píxeles</span></div>
+<div class="row"><span class="rl">Ancho/Alto máx</span><span class="rv">10,240 × 8,192 px</span></div>
+<div class="row"><span class="rl">Prioridad</span><span class="rv">Ajustable</span></div>
+</div>
+</div>
+
+<div class="card" style="margin-top:12px">
+<div class="ch"><div class="ci" style="background:#dcfce7">⚡</div><div><div class="ct">Procesamiento de video</div><div class="cs">SuperView III</div></div></div>
+<div class="row"><span class="rl">Escalado</span><span class="rv">Stepless (sin escalones)</span></div>
+<div class="row"><span class="rl">Full screen</span><span class="rv">One-click</span></div>
+<div class="row"><span class="rl">Input cropping</span><span class="rv">Libre</span></div>
+<div class="row"><span class="rl">Color management</span><span class="rv">Brillo · saturación · contraste · hue</span></div>
+<div class="row"><span class="rl">Calibración LED</span><span class="rv">Pixel-level brillo y croma (con NovaLCT)</span></div>
+</div>
+
+<div class="card" style="margin-top:12px">
+<div class="ch"><div class="ci" style="background:#fef9c3">🏁</div><div><div class="ct">Output synchronization</div></div></div>
+<p style="font-size:12px;color:var(--s);line-height:1.7">Usa una fuente de entrada interna como referencia de sincronismo para que todas las pantallas conectadas muestren la imagen en fase. Junto con <strong>low latency</strong>, alcanza <strong>retardo mínimo de 1 frame</strong> desde la entrada hasta la receiving card.</p>
+</div>
+</div>
+
+<!-- LEDs -->
+<div class="sec" id="s-leds">
+<div class="card">
+<div class="ch"><div class="ci" style="background:#fef9c3">💡</div><div><div class="ct">LEDs indicadores</div><div class="cs">Panel frontal y puertos Ethernet</div></div></div>
+</div>
+
+<div class="section-title">🔵 Botones de CAPA (Main / PIP)</div>
+<div class="card">
+<div class="ind"><div class="ind-dot" style="background:#3b82f6"></div><span class="ind-name">Azul fijo</span><span class="ind-desc">✅ La capa está abierta</span></div>
+<div class="ind"><div class="ind-dot" style="background:#3b82f6;animation:blink1 1s infinite"></div><span class="ind-name">Azul flash</span><span class="ind-desc">✏️ La capa está siendo editada</span></div>
+<div class="ind"><div class="ind-dot" style="background:#fff;border:1px solid #d1d5db"></div><span class="ind-name">Blanco</span><span class="ind-desc">⚪ La capa está cerrada</span></div>
+</div>
+
+<div class="section-title">🔲 Botón SCALE (full screen)</div>
+<div class="card">
+<div class="ind"><div class="ind-dot" style="background:#3b82f6"></div><span class="ind-name">Azul fijo</span><span class="ind-desc">✅ Full screen scaling activado</span></div>
+<div class="ind"><div class="ind-dot" style="background:#fff;border:1px solid #d1d5db"></div><span class="ind-name">Blanco</span><span class="ind-desc">⚪ Full screen scaling desactivado</span></div>
+</div>
+
+<div class="section-title">📥 Botones de INPUT (HDMI/DVI/SDI)</div>
+<div class="card">
+<div class="ind"><div class="ind-dot" style="background:#3b82f6"></div><span class="ind-name">Azul fijo</span><span class="ind-desc">✅ Fuente conectada y disponible</span></div>
+<div class="ind"><div class="ind-dot" style="background:#3b82f6;animation:blink1 1s infinite"></div><span class="ind-name">Azul flash</span><span class="ind-desc">⚠️ Fuente NO conectada pero asignada a la capa</span></div>
+<div class="ind"><div class="ind-dot" style="background:#fff;border:1px solid #d1d5db"></div><span class="ind-name">Blanco</span><span class="ind-desc">❌ Fuente no accesible o señal anormal</span></div>
+</div>
+
+<div class="section-title">🌐 Puertos ETH OUT (top-left = conexión)</div>
+<div class="card">
+<div class="ind"><div class="ind-dot" style="background:#22c55e"></div><span class="ind-name">Fijo</span><span class="ind-desc">✅ Puerto bien conectado</span></div>
+<div class="ind"><div class="ind-dot" style="background:#22c55e;animation:blink1 1s infinite"></div><span class="ind-name">Flash</span><span class="ind-desc">⚠️ Puerto mal conectado (cable flojo)</span></div>
+<div class="ind"><div class="ind-dot" style="background:#6b7280"></div><span class="ind-name">OFF</span><span class="ind-desc">❌ Puerto no conectado</span></div>
+</div>
+
+<div class="section-title">🌐 Puertos ETH OUT (top-right = comunicación)</div>
+<div class="card">
+<div class="ind"><div class="ind-dot" style="background:#eab308"></div><span class="ind-name">Fijo</span><span class="ind-desc">⚠️ Cable Ethernet en cortocircuito</span></div>
+<div class="ind"><div class="ind-dot" style="background:#eab308;animation:blink1 1s infinite"></div><span class="ind-name">Flash</span><span class="ind-desc">✅ Comunicación OK, transmitiendo datos</span></div>
+<div class="ind"><div class="ind-dot" style="background:#6b7280"></div><span class="ind-name">OFF</span><span class="ind-desc">⚪ Sin transmisión de datos</span></div>
+</div>
+
+<div class="tip"><span class="ti">🔍</span><div class="tt"><strong>Diagnóstico rápido en obra:</strong> Si un puerto ETH tiene el LED izquierdo en flash, es problema físico (conector flojo, RJ45 mal crimpado). Si el LED izquierdo está bien pero el derecho está en cortocircuito (fijo amarillo), reemplazá el cable.</div></div>
+</div>
+
+<!-- VIDEO SOURCE -->
+<div class="sec" id="s-video">
+<div class="card">
+<div class="ch"><div class="ci" style="background:#dbeafe">🎥</div><div><div class="ct">Fuentes de video soportadas</div><div class="cs">Resoluciones, bit depth y formatos</div></div></div>
+</div>
+
+<table class="codec-table">
+<thead><tr><th>Entrada</th><th>Bit Depth</th><th>Resolución máxima</th></tr></thead>
+<tbody>
+<tr><td rowspan="3"><strong>HDMI 1.4</strong><br>+ DVI (HDMI 1.4)</td><td>RGB 4:4:4</td><td>3840×1080@60Hz (Standard)</td></tr>
+<tr><td>YCbCr 4:4:4</td><td>4092×1136@60Hz (Custom)</td></tr>
+<tr><td>YCbCr 4:2:2</td><td>4096×1080@60Hz (Forced)</td></tr>
+<tr><td colspan="2"><strong>3G-SDI</strong> (opcional)</td><td>1920×1080@60Hz</td></tr>
+</tbody>
+</table>
+
+<div class="card" style="margin-top:12px">
+<div class="ch"><div class="ci" style="background:#dcfce7">📐</div><div><div class="ct">Resoluciones custom</div></div></div>
+<div class="row"><span class="rl">Ancho máximo</span><span class="rv"><span class="mono">4092 × 1136 @60Hz</span></span></div>
+<div class="row"><span class="rl">Alto máximo</span><span class="rv"><span class="mono">1058 × 3981 @60Hz</span></span></div>
+</div>
+
+<div class="card" style="margin-top:12px">
+<div class="ch"><div class="ci" style="background:#fef9c3">📡</div><div><div class="ct">3G-SDI — formatos soportados</div></div></div>
+<div class="row"><span class="rl">ST-424</span><span class="rv">3G</span></div>
+<div class="row"><span class="rl">ST-292</span><span class="rv">HD</span></div>
+<div class="row"><span class="rl">ST-259</span><span class="rv">SD</span></div>
+<div class="row"><span class="rl">Deinterlacing</span><span class="rv">✅ Soportado</span></div>
+<div class="row"><span class="rl">Loop output</span><span class="rv">✅ Soportado</span></div>
+</div>
+
+<div class="warn"><span class="ti">⚠️</span><div class="tt"><strong>Limitaciones de entrada:</strong><br>• YCbCr 4:2:0 → NO soportado en HDMI/DVI<br>• 10-bit y 12-bit → NO soportados<br>• Señales entrelazadas (1080i) → NO soportadas en HDMI/DVI<br>• 3G-SDI → no permite ajustar resolución ni bit depth manualmente</div></div>
+
+<div class="card">
+<div class="ch"><div class="ci" style="background:#f3e8ff">🔊</div><div><div class="ct">Audio</div></div></div>
+<div class="row"><span class="rl">Audio embebido</span><span class="rv">Vía HDMI input</span></div>
+<div class="row"><span class="rl">Audio independiente</span><span class="rv">Jack 3.5 mm IN + OUT</span></div>
+<div class="row"><span class="rl">Audio a pantalla</span><span class="rv">Vía multifunction card (ETH 1 o 2)</span></div>
+</div>
+</div>
+
+<!-- SPECS -->
+<div class="sec" id="s-specs">
+<div class="card">
+<div class="ch"><div class="ci" style="background:#dbeafe">📊</div><div><div class="ct">Especificaciones técnicas</div><div class="cs">Datos oficiales NovaStar</div></div></div>
+</div>
+
+<table class="spec-table">
+<thead><tr><th colspan="2">⚡ Eléctrico</th></tr></thead>
+<tbody>
+<tr><td>Conector de poder</td><td>100–240V~ · 50/60Hz · 1.6A</td></tr>
+<tr><td>Consumo</td><td>28 W</td></tr>
+</tbody>
+</table>
+
+<table class="spec-table">
+<thead><tr><th colspan="2">🌡️ Operación</th></tr></thead>
+<tbody>
+<tr><td>Temperatura</td><td>0°C a 50°C</td></tr>
+<tr><td>Humedad</td><td>20% a 90% RH, no condensante</td></tr>
+</tbody>
+</table>
+
+<table class="spec-table">
+<thead><tr><th colspan="2">📦 Almacenamiento</th></tr></thead>
+<tbody>
+<tr><td>Temperatura</td><td>−20°C a +70°C</td></tr>
+<tr><td>Humedad</td><td>10% a 95% RH, no condensante</td></tr>
+</tbody>
+</table>
+
+<table class="spec-table">
+<thead><tr><th colspan="2">📏 Físico</th></tr></thead>
+<tbody>
+<tr><td>Dimensiones</td><td>482.6 × 250.0 × 50.1 mm (1U)</td></tr>
+<tr><td>Peso neto</td><td>3.5 kg</td></tr>
+<tr><td>Peso bruto</td><td>5.6 kg</td></tr>
+<tr><td>Packing</td><td>550 × 175 × 400 mm</td></tr>
+<tr><td>Ruido típico</td><td>45 dB(A) a 25°C</td></tr>
+</tbody>
+</table>
+
+<table class="spec-table">
+<thead><tr><th colspan="2">📺 Capacidad de salida</th></tr></thead>
+<tbody>
+<tr><td>Carga máxima</td><td>6,500,000 píxeles</td></tr>
+<tr><td>Ancho máximo</td><td>10,240 px</td></tr>
+<tr><td>Alto máximo</td><td>8,192 px</td></tr>
+<tr><td>Puertos ETH</td><td>10× Gigabit</td></tr>
+<tr><td>HDMI monitor</td><td>1× HDMI 1.3</td></tr>
+</tbody>
+</table>
+
+<table class="spec-table">
+<thead><tr><th colspan="2">🎬 Procesamiento</th></tr></thead>
+<tbody>
+<tr><td>Motor de imagen</td><td>SuperView III</td></tr>
+<tr><td>Capas de video</td><td>3 (Main + PIP1 + PIP2)</td></tr>
+<tr><td>OSD</td><td>1 capa (8 imágenes guardables)</td></tr>
+<tr><td>Presets</td><td>10 user-defined</td></tr>
+<tr><td>Latencia mínima</td><td>1 frame</td></tr>
+<tr><td>Calibración</td><td>Pixel-level brillo + croma</td></tr>
+</tbody>
+</table>
+
+<div class="tip"><span class="ti">📦</span><div class="tt"><strong>Accesorios incluidos:</strong> Cable de poder · USB · DVI · HDMI · Certificate of Approval. Solo packaging en carton — no flight case de fábrica.</div></div>
+</div>
+
+<!-- TROUBLE -->
+<div class="sec" id="s-trouble">
+<div class="card">
+<div class="ch"><div class="ci" style="background:#fee2e2">🔧</div><div><div class="ct">Resolución de problemas</div><div class="cs">Casos típicos en obra</div></div></div>
+</div>
+
+<div class="acc open">
+<div class="ah" onclick="toggleAcc(this)">❌ La pantalla no muestra imagen <span class="arrow">▼</span></div>
+<div class="ab">
+<ol style="font-size:12px;color:var(--s);line-height:1.8;padding-left:20px">
+<li>Verificá que el LED del botón de input source esté <strong>azul fijo</strong> (no blanco ni flash).</li>
+<li>Si está flash azul, la fuente está asignada pero no llega señal — revisá el cable HDMI/DVI/SDI.</li>
+<li>Confirmá que los LEDs izquierdos de los puertos ETH OUT estén fijos en verde.</li>
+<li>Probá el botón SCALE para forzar full screen — si aparece, el problema es de tamaño/posición de capa.</li>
+</ol>
+</div>
+</div>
+
+<div class="acc">
+<div class="ah" onclick="toggleAcc(this)">⚠️ Imagen entrelazada o con líneas <span class="arrow">▼</span></div>
+<div class="ab">
+<p style="font-size:12px;color:var(--s);line-height:1.7">El VC10 NO soporta señales interlaced (1080i) en HDMI/DVI. Si tu fuente entrega entrelazado, configurá la salida en progresivo (1080p) desde el equipo origen, o pasala por un conversor previo.</p>
+<p style="font-size:12px;color:var(--s);line-height:1.7;margin-top:6px">Si entra por <strong>3G-SDI</strong>, el deinterlacing es automático.</p>
+</div>
+</div>
+
+<div class="acc">
+<div class="ah" onclick="toggleAcc(this)">🔇 No hay audio en la pantalla <span class="arrow">▼</span></div>
+<div class="ab">
+<ol style="font-size:12px;color:var(--s);line-height:1.8;padding-left:20px">
+<li>La <strong>multifunction card</strong> que parsea el audio debe estar conectada a <strong>ETH 1 o ETH 2</strong>. Cualquier otro puerto no rutea audio.</li>
+<li>Si usás audio embebido en HDMI, verificá que la fuente lo esté emitiendo.</li>
+<li>Para audio independiente, usá el jack 3.5 mm AUDIO IN y configurá la salida desde NovaLCT.</li>
+</ol>
+</div>
+</div>
+
+<div class="acc">
+<div class="ah" onclick="toggleAcc(this)">🔌 PC no detecta el VC10 <span class="arrow">▼</span></div>
+<div class="ab">
+<p style="font-size:12px;color:var(--s);line-height:1.7">Tenés dos vías de control: <strong>USB Type-B</strong> directo al PC, o <strong>ETHERNET</strong> al router/PC. Si no detecta:</p>
+<ol style="font-size:12px;color:var(--s);line-height:1.8;padding-left:20px;margin-top:6px">
+<li>Probá el otro método de conexión.</li>
+<li>Verificá que tengas NovaLCT y/o V-Can instalados y actualizados.</li>
+<li>Confirmá que el VC10 esté encendido (LCD activo).</li>
+<li>Revisá que los botones del panel no estén bloqueados (KNOB+ESC 3s para desbloquear).</li>
+</ol>
+</div>
+</div>
+
+<div class="acc">
+<div class="ah" onclick="toggleAcc(this)">🌐 Puertos ETH OUT con LED amarillo fijo <span class="arrow">▼</span></div>
+<div class="ab">
+<p style="font-size:12px;color:var(--s);line-height:1.7">El LED top-right en <strong>amarillo fijo</strong> indica que el cable Ethernet está en cortocircuito. Reemplazá el cable inmediatamente — un corto sostenido puede dañar el puerto del VC10 o de la receiving card.</p>
+</div>
+</div>
+
+<div class="acc">
+<div class="ah" onclick="toggleAcc(this)">🔒 No responden los botones del panel <span class="arrow">▼</span></div>
+<div class="ab">
+<p style="font-size:12px;color:var(--s);line-height:1.7">El panel está bloqueado. Mantené presionados <strong>KNOB + ESC</strong> simultáneamente durante 3 segundos o más para desbloquear.</p>
+</div>
+</div>
+
+<div class="acc">
+<div class="ah" onclick="toggleAcc(this)">📐 La imagen sale escalada o cortada <span class="arrow">▼</span></div>
+<div class="ab">
+<p style="font-size:12px;color:var(--s);line-height:1.7">El VC10 hace escalado stepless con SuperView III. Si la imagen sale mal:</p>
+<ol style="font-size:12px;color:var(--s);line-height:1.8;padding-left:20px;margin-top:6px">
+<li>Revisá la resolución de la fuente (debe estar dentro de los límites — máx 4K×1K@60Hz).</li>
+<li>Verificá el input cropping desde NovaLCT.</li>
+<li>Probá SCALE en el panel frontal para forzar full screen y descartar problema de capa.</li>
+<li>Si usás resolución custom, no excedas 4092×1136 (ancho) o 1058×3981 (alto).</li>
+</ol>
+</div>
+</div>
+
+<div class="acc">
+<div class="ah" onclick="toggleAcc(this)">⏱️ Latencia alta entre fuente y pantalla <span class="arrow">▼</span></div>
+<div class="ab">
+<p style="font-size:12px;color:var(--s);line-height:1.7">Para bajar a <strong>1 frame de latencia</strong> activá AMBAS funciones desde NovaLCT:</p>
+<ul style="font-size:12px;color:var(--s);line-height:1.8;padding-left:20px;margin-top:6px">
+<li><strong>Low latency</strong> (baja latencia)</li>
+<li><strong>Output synchronization</strong> (sincronización de salida)</li>
+</ul>
+<p style="font-size:12px;color:var(--s);line-height:1.7;margin-top:6px">Sin ambas activas, la latencia será mayor.</p>
+</div>
+</div>
+
+<div class="tip"><span class="ti">🛠️</span><div class="tt"><strong>Soporte oficial NovaStar:</strong> <span class="mono">support@novastar.tech</span> · sitio: <span class="mono">www.novastar.tech</span></div></div>
+</div>
+
+<!-- BUSCAR -->
+<div class="sec" id="s-buscar">
+<div class="sbox"><input type="text" id="si" placeholder="Buscar: HDMI, SDI, capas, OSD, latencia, audio..." oninput="doSearch()"></div>
+<div id="sres"></div>
+</div>
+
+<!-- QUIZ -->
+<div class="sec" id="s-quiz">
+<div class="card">
+<div class="ch"><div class="ci" style="background:#dbeafe">🎯</div><div><div class="ct">Quiz — ¿Conocés el VC10?</div><div class="cs">10 preguntas para verificar tu conocimiento</div></div></div>
+</div>
+<div id="quiz-content"></div>
+<div id="quiz-score" style="margin-top:12px"></div>
+</div>
+
+<footer>Manual técnico <strong>VC10</strong> · All-in-One Controller · <strong>Dinalight</strong></footer>
+
+<script>
+// NAV
+document.querySelectorAll('.nb').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('.nb').forEach(x=>x.classList.remove('on'));
+    document.querySelectorAll('.sec').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    document.getElementById('s-'+b.dataset.t).classList.add('on');
+    window.scrollTo(0,0);
+  };
+});
+
+// ACORDEÓN
+function toggleAcc(el){el.parentElement.classList.toggle('open')}
+
+// BUSCADOR
+const SEARCH_DATA=[
+{t:'Carga máxima',d:'El VC10 maneja hasta 6,500,000 píxeles. Ancho máx 10,240 px, alto máx 8,192 px.',s:'specs'},
+{t:'Puertos Ethernet',d:'10 puertos Gigabit Ethernet de salida hacia receiving cards. ETH 1 y 2 también rutean audio.',s:'conex'},
+{t:'HDMI IN',d:'2 entradas HDMI 1.4. Máx 4K×1K@60Hz, HDCP 1.4. Custom hasta 4092×1136. No soporta interlaced.',s:'video'},
+{t:'DVI IN',d:'1 entrada DVI (HDMI 1.4). Mismas specs que HDMI: máx 4K×1K@60Hz, HDCP 1.4.',s:'video'},
+{t:'3G-SDI',d:'Entrada opcional. ST-424/ST-292/ST-259. Máx 1920×1080@60Hz. Deinterlacing automático. IN+LOOP.',s:'video'},
+{t:'HDMI OUT',d:'1 salida HDMI 1.3 para monitoreo o video. Resolución ajustable.',s:'conex'},
+{t:'Audio entrada',d:'3.5mm jack independiente + audio embebido en HDMI. Salida 3.5mm independiente.',s:'video'},
+{t:'Audio a pantalla',d:'Vía multifunction card NovaStar conectada obligatoriamente a ETH 1 o ETH 2.',s:'conex'},
+{t:'Capas de video',d:'3 capas simultáneas: Main + PIP 1 + PIP 2. Tamaño, posición y prioridad ajustables.',s:'capas'},
+{t:'OSD',d:'1 capa OSD por preset. Hasta 8 imágenes guardables. Resolución máx 10,240×8,192 px.',s:'capas'},
+{t:'Presets',d:'Hasta 10 presets user-defined. Acceso directo desde botón PRESET del panel frontal.',s:'panel'},
+{t:'Low latency',d:'Latencia mínima de 1 frame con Low Latency + Output Synchronization activadas.',s:'capas'},
+{t:'SuperView III',d:'Motor de procesamiento. Escalado stepless, full screen one-click, input cropping libre.',s:'capas'},
+{t:'Hot backup',d:'Dos esquemas: backup entre dispositivos (VC10+VC10) o backup entre puertos Ethernet.',s:'conex'},
+{t:'Color management',d:'Brillo, saturación, contraste y hue ajustables por entrada. Calibración pixel-level con NovaLCT.',s:'capas'},
+{t:'Bloqueo de panel',d:'Mantener KNOB + ESC simultáneamente por 3 segundos o más para bloquear/desbloquear.',s:'panel'},
+{t:'USB',d:'2 puertos USB 2.0. Type-B = conexión a PC. Type-A = salida para cascada de dispositivos.',s:'conex'},
+{t:'Ethernet control',d:'1 puerto para PC de control y actualización de firmware vía V-Can.',s:'conex'},
+{t:'Alimentación',d:'100–240V~ · 50/60Hz · 1.6A. Consumo 28 W. Switch ON/OFF físico en panel frontal.',s:'specs'},
+{t:'Dimensiones',d:'482.6 × 250.0 × 50.1 mm (1U rack). Peso neto 3.5 kg. Peso bruto 5.6 kg.',s:'specs'},
+{t:'Temperatura',d:'Operación 0°C a 50°C. Almacenamiento −20°C a +70°C. Humedad 20-90% RH no condensante.',s:'specs'},
+{t:'Ruido',d:'45 dB(A) típico a 25°C.',s:'specs'},
+{t:'Software',d:'Compatible con NovaLCT (configuración) y V-Can (control y firmware).',s:'specs'},
+{t:'Resoluciones custom',d:'Ancho máx 4092×1136 @60Hz. Alto máx 1058×3981 @60Hz. Solo en HDMI y DVI.',s:'video'},
+{t:'Bit depth soportados',d:'Solo 8-bit. RGB 4:4:4, YCbCr 4:4:4, YCbCr 4:2:2. NO soporta 4:2:0, 10-bit ni 12-bit.',s:'video'},
+{t:'Botón SCALE',d:'Atajo de full screen. Hace que la capa de menor prioridad ocupe toda la pantalla.',s:'panel'},
+{t:'Botón FN',d:'Customizable. Asignás la función desde el menú del LCD.',s:'panel'},
+{t:'Packing',d:'Caja de cartón 550 × 175 × 400 mm. Incluye power cord, USB, DVI, HDMI, certificate.',s:'specs'},
+{t:'Aplicación típica',d:'Cartelería fija, frente de local, retail, publicidad outdoor, señalización urbana.',s:'intro'},
+{t:'Diferencia con VX1000',d:'VC10 es para instalación fija — sin fibra óptica, sin Genlock, sin 3D, una DVI. Suma OSD y 1-frame latency.',s:'intro'}
+];
+
+function doSearch(){
+  const q=document.getElementById('si').value.toLowerCase().trim();
+  if(!q){document.getElementById('sres').innerHTML='<div class="empty"><div class="em">🔍</div><p>Escribí algo para buscar</p></div>';return}
+  const res=SEARCH_DATA.filter(x=>(x.t+' '+x.d).toLowerCase().includes(q));
+  if(!res.length){document.getElementById('sres').innerHTML='<div class="empty"><div class="em">😕</div><p>Sin resultados para "'+q+'"</p></div>';return}
+  document.getElementById('sres').innerHTML=res.map(x=>'<div class="card" style="cursor:pointer" onclick="goSec(\''+x.s+'\')"><div class="ct" style="margin-bottom:4px">'+x.t+'</div><p style="font-size:12px;color:var(--s)">'+x.d+'</p><span class="chip chip-b">→ '+x.s+'</span></div>').join('');
+}
+function goSec(id){
+  document.querySelectorAll('.nb').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.sec').forEach(x=>x.classList.remove('on'));
+  const btn=document.querySelector('.nb[data-t="'+id+'"]');
+  if(btn)btn.classList.add('on');
+  document.getElementById('s-'+id).classList.add('on');
+  window.scrollTo(0,0);
+}
+
+// QUIZ
+const QUIZ=[
+{q:'¿Cuántos píxeles maneja el VC10?',o:['1,300,000','3,250,000','6,500,000','13,000,000'],a:2},
+{q:'¿Cuántos puertos Ethernet de salida tiene?',o:['4','8','10','16'],a:2},
+{q:'¿Cuál es la latencia mínima alcanzable?',o:['1 frame','2 frames','5 frames','10 frames'],a:0},
+{q:'¿Cuántas capas de video maneja simultáneamente?',o:['1','2','3','4'],a:2},
+{q:'Si usás multifunction card para audio, ¿a qué ETH debe conectarse?',o:['Cualquiera','ETH 1 o ETH 2','ETH 9 o ETH 10','Solo ETH 1'],a:1},
+{q:'¿Cómo se bloquea/desbloquea el panel frontal?',o:['Botón LOCK','KNOB + ESC por 3 segundos','Power off + on','Desde V-Can'],a:1},
+{q:'¿Cuál es el ancho máximo de salida?',o:['4,096 px','8,192 px','10,240 px','16,384 px'],a:2},
+{q:'¿Cuántas imágenes OSD se pueden guardar?',o:['1','4','8','16'],a:2},
+{q:'¿Qué tipo de señales NO acepta HDMI/DVI?',o:['1080p progresivo','4K','Entrelazadas (1080i)','HDCP'],a:2},
+{q:'¿Cuál es el consumo eléctrico del VC10?',o:['18 W','28 W','35 W','60 W'],a:1}
+];
+let qIdx=0,score=0;
+function renderQuiz(){
+  if(qIdx>=QUIZ.length){
+    document.getElementById('quiz-content').innerHTML='';
+    const pct=Math.round(score/QUIZ.length*100);
+    let msg=pct>=75?'🏆 ¡Excelente! Dominás el VC10.':pct>=50?'👍 Bien, pero podés mejorar. Revisá las pestañas.':'📖 Necesitás repasar. Andá a las pestañas y volvé a intentar.';
+    document.getElementById('quiz-score').innerHTML='<div class="card" style="text-align:center;border-color:var(--a)"><div style="font-size:36px;margin-bottom:8px">'+(pct>=75?'🏆':'📋')+'</div><div class="ct" style="font-size:20px;margin-bottom:4px">'+score+' / '+QUIZ.length+'</div><p style="font-size:12px;color:var(--s)">'+msg+'</p><button class="nb" style="margin-top:12px" onclick="qIdx=0;score=0;renderQuiz();document.getElementById(\'quiz-score\').innerHTML=\'\'">🔄 Volver a intentar</button></div>';
+    return;
+  }
+  const q=QUIZ[qIdx];
+  let html='<div class="card"><p style="font-size:11px;color:var(--s);margin-bottom:4px">Pregunta '+(qIdx+1)+' de '+QUIZ.length+'</p><p style="font-size:14px;font-weight:800;margin-bottom:12px">'+q.q+'</p>';
+  q.o.forEach((o,i)=>{html+='<button class="quiz-opt" onclick="answer('+i+',this)">'+o+'</button>'});
+  html+='</div>';
+  document.getElementById('quiz-content').innerHTML=html;
+}
+function answer(i,el){
+  const q=QUIZ[qIdx];
+  document.querySelectorAll('.quiz-opt').forEach((b,j)=>{
+    b.disabled=true;b.style.pointerEvents='none';
+    if(j===q.a)b.classList.add('correct');
+    else if(j===i)b.classList.add('wrong');
+  });
+  if(i===q.a)score++;
+  setTimeout(()=>{qIdx++;renderQuiz()},1000);
+}
+renderQuiz();
+</script>
+</body>
+</html>
